@@ -1,0 +1,3 @@
+[submodule "lib/alis-web-index"]
+	path = lib/alis-web-index
+	url = git@github.com:grodno-city/alis-web-index.git
