@@ -1,0 +1,11 @@
+version: "3.2"
+
+services:
+  uploader:
+    build: .
+    command: /home/snapshots
+    volumes:
+      - .:/home/app
+      - ./snapshots:/home/snapshots
+    env_file:
+      - .env

@@ -7,7 +7,9 @@ import { MongoClient } from 'mongodb';
 const pathToScript = path.join(__dirname, '../lib/alis-web-index/bin');
 const pathToSnapshot = path.join(__dirname, '../snapshots/snapshot.txt');
 
-const url = 'url-to-database';
+const { DB_USER, DB_PASS } = process.env;
+
+const url = `mongodb://${DB_USER}:${DB_PASS}@ds123933.mlab.com:23933/library-data-set`;
 
 const filterDocuments = (object, _, next) => {
   if (object.record) return next(null, object.record);
