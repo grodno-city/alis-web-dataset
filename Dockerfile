@@ -2,11 +2,15 @@ FROM node:latest
 
 WORKDIR /home/app
 
-RUN npm install
+COPY package.json /home/app
+
+RUN npm install -q
 
 WORKDIR /home/app/lib/alis-web-index
 
-RUN npm install
+COPY lib/alis-web-index/package.json /home/app/lib/alis-web-index
+
+RUN npm install -q
 
 WORKDIR /home/app
 
