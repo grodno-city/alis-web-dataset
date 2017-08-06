@@ -7,9 +7,17 @@ import { MongoClient } from 'mongodb';
 const pathToScript = path.join(__dirname, '../lib/alis-web-index/bin');
 const pathToSnapshot = path.join(__dirname, '../snapshots/snapshot.txt');
 
-const { DB_USER, DB_PASS } = process.env;
+const { DB_USER, DB_PASS, DB_URL } = process.env;
 
-const url = `mongodb://${DB_USER}:${DB_PASS}@ds123933.mlab.com:23933/library-data-set`;
+let url = `mongodb://${DB_USER}:${DB_PASS}@${DB_URL}/library-data-set`;
+
+if (!DB_USER && !DB_PASS && DB_URL) {
+  url = `mongodb://${DB_URL}/library-data-set`;
+}
+
+if (!DB_USER || !DB_PASS || !DB_URL) {
+  url = 'mongodb://mongodb:27017/library-data-set';
+}
 
 const filterDocuments = (object, _, next) => {
   if (object.record) return next(null, object.record);

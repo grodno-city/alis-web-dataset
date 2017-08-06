@@ -12,3 +12,16 @@ services:
     env_file:
       - .env
     restart: on-failure
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+  mongodb:
+    image: "mongo:latest"
+    volumes:
+      - mongodb-data:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  mongodb-data:
