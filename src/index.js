@@ -37,8 +37,14 @@ MongoClient.connect(url, (err, db) => {
   const child = spawn('babel-node', [pathToScript, '-s', pathToSnapshot]);
 
   child.stdout
+    .pipe(through((chunk, _, next) => {
+      console.log(chunk.toString());
+      next(null, chunk);
+    }))
     .pipe(split(JSON.parse))
     .pipe(through.obj(filterDocuments))
-    .on('error', console.error)
     .pipe(through.obj(createWriter(rawDataSet)));
+
+  child.stderr
+    .on('data', data => console.error(data.toString()));
 });
